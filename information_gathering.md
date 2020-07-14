@@ -11,14 +11,14 @@ Knowing _who_ you are attacking is just as important as knowing _what_ you're at
 
 An automated way to do this is [theHarvester](https://github.com/laramies/theHarvester).
 
-## Indirect Active Information Gathering
+## Indirect Active Information Gathering Services
 There are some lovely companies out there that gather information on everyone, seemingly for the hell of it. Use these to get information generally reserved for the active information gathering stage.
 
 1. [Shodan](https://www.shodan.io/)
 2. [Netcraft](https://www.netcraft.com/)
 3. [Whois](https://who.is/)
 
-# Recon-ng
+## Framework: Recon-ng
 A framework similar to Metasploit, that is exclusively for reconnaissance. Get it [here](https://github.com/lanmaster53/recon-ng).
 
 # Active Information Gathering
