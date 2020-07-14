@@ -1,6 +1,7 @@
 ---
 title: Information Gathering
 ---
+
 [Home](./)
 
 # Passive Information Gathering

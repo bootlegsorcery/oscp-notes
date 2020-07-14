@@ -3,7 +3,7 @@ title: The Art of the Penetration Test
 ---
 
 ## Stages
-1. [Information Gathering](./information_gathering.md)
+1. [Information Gathering](./information_gathering)
 
     `This stage involves passive information gathering (i.e. google, whois)`
 
