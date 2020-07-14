@@ -11,7 +11,7 @@ title: The Art of the Penetration Test
 
     `This stage involves active information gathering (i.e. port scanning, dns enumeration)`
 
-3. Penetration
+3. [Exploitation](./exploitation.md)
    
    `This stage involves exploiting found vulnerabilities (i.e. performing SQLi)`
 
