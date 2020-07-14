@@ -33,3 +33,41 @@ A framework similar to Metasploit, that is exclusively for reconnaissance. Get i
 
 # Active Information Gathering
 _Information gathering in which you interact directly with the target system/network._
+
+## DNS Enumeration
+
+DNS Servers are the address books of the internet. As such, they store a wealth of knowledge about the layout of a target's network.
+
+### Manual Enumeration
+```bash
+# Find IP address from domain (Forward Lookup)
+host $DOMAIN
+
+# Find domain from IP address (Reverse Lookup)
+host $IP
+
+# Find Name Servers
+host -t ns $DOMAIN
+
+# Find Mail Servers
+host -t mx $DOMAIN
+
+# Perform a Zone Transfer
+host -l $DOMAIN $NAME_SERVER
+```
+
+### DNSRecon
+
+Performs an "Asynchronous Transfer Full Range"
+
+```bash
+dnsrecon -d $DOMAIN -t axfr
+```
+
+### DNSEnum
+
+Performs a Zone Transfer
+
+```bash
+dnsenum $DOMAIN
+```
