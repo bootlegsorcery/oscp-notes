@@ -3,11 +3,11 @@ title: The Art of the Penetration Test
 ---
 
 ## Stages
-1. [Information Gathering](./information_gathering)
+1. [Passive Information Gathering](./passive_information_gathering.md)
 
     `This stage involves passive information gathering (i.e. google, whois)`
 
-2. Service Enumeration
+2. [Active Information Gathering](./active_information_gathering.md)
 
     `This stage involves active information gathering (i.e. port scanning, dns enumeration)`
 
