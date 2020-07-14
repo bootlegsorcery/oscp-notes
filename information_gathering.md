@@ -17,6 +17,10 @@ Knowing _who_ you are attacking is just as important as knowing _what_ you're at
 
 An automated way to do this is [theHarvester](https://github.com/laramies/theHarvester).
 
+```bash
+theharvester -d $DOMAIN -l $RESULT_LIMIT -b $DATA_SOURCE
+```
+
 ## Indirect Active Information Gathering Services
 There are some lovely companies out there that gather information on everyone, seemingly for the hell of it. Use these to get information generally reserved for the active information gathering stage.
 
