@@ -1,7 +1,7 @@
 # The Art of the Penetration Testing
 
 ## Stages of a Penetration Test
-1. Information Gathering
+1. [Information Gathering](./information_gathering.md)
 
     `This stage involves passive information gathering (i.e. google, whois)`
 
