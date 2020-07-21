@@ -75,7 +75,11 @@ dirbuster
 ```bash
 nmap --script=http-wordpress* -p 80 $RHOST
 
-wpscan --url $RHOST
+# Enumerate
+wpscan --url $RHOST --enumerate u[$LOW-$HIGH]vp
+
+# Bruteforce
+wpscan --url $RHOST --usernames [$USER_WORDLIST] --passwords [$PASS_WORDLIST]
 ```
 
 ### Port 110 - POP3
