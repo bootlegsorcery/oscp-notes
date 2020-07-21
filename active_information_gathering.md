@@ -15,8 +15,8 @@ _Information gathering in which you interact directly with the target system/net
 | A | 0 | 0.0.0.0 | 127.255.255.255 | 255.0.0.0 | /8 |
 | B | 10 | 128.0.0.0 | 191.255.255.255 | 255.255.0.0 | /16 |
 | C | 110 | 192.0.0.0 | 223.255.255.255 | 255.255.255.0 | /24 |
-| D </br> (multicast) | 1110 | 224.0.0.0 | 239.255.255.255 | [undefined] | [undefined] |
-| E </br> (reserved) | 1111 | 240.0.0.0 | 255.255.255.255 | [undefined] | [undefined] |
+| D <br/> (multicast) | 1110 | 224.0.0.0 | 239.255.255.255 | [undefined] | [undefined] |
+| E <br/> (reserved) | 1111 | 240.0.0.0 | 255.255.255.255 | [undefined] | [undefined] |
 
 <sup>[source](https://en.wikipedia.org/wiki/Classful_network)</sup>
 
