@@ -65,7 +65,7 @@ nmap –script smtp-commands,smtp-enum-users,smtp-vuln-cve2010-4344, smtp-vuln-c
 ### Port 80 - HTTP
 
 ```bash
-nikto $RHOST
+nikto -h $RHOST
 
 curl $RHOST/robots.txt
 
