@@ -6,69 +6,42 @@ title: Active Information Gathering
 
 _Information gathering in which you interact directly with the target system/network._
 
-## DNS Enumeration
-
-DNS Servers are the address books of the internet. As such, they store a wealth of knowledge about the layout of a target's network.
-
-### Manual Enumeration
-```bash
-# Find IP address from domain (Forward Lookup)
-host $DOMAIN
-
-# Find domain from IP address (Reverse Lookup)
-host $IP
-
-# Find Name Servers
-host -t ns $DOMAIN
-
-# Find Mail Servers
-host -t mx $DOMAIN
-
-# Perform a Zone Transfer
-host -l $DOMAIN $NAME_SERVER
-```
-
-### DNSRecon
-
-Performs an "Asynchronous Transfer Full Range"
-
-```bash
-dnsrecon -d $DOMAIN -t axfr
-```
-
-### DNSEnum
-
-Performs a Zone Transfer
-
-```bash
-dnsenum $DOMAIN
-```
-
 ## Port Scanning
+
+### Classful Addressing
+
+| Class | Leading Bits | Start Address | End Address | Default Subnet Mask | CIDR Notation |
+| :---: | :----------: | :-----------: | :---------: | :-----------------: | :-----------: |
+| A | 0 | 0.0.0.0 | 127.255.255.255 | 255.0.0.0 | /8 |
+| B | 10 | 128.0.0.0 | 191.255.255.255 | 255.255.0.0 | /16 |
+| C | 110 | 192.0.0.0 | 223.255.255.255 | 255.255.255.0 | /24 |
+| D</br>(multicast) | 1110 | 224.0.0.0 | 239.255.255.255 | [undefined] | [undefined] |
+| E</br>(reserved) | 1111 | 240.0.0.0 | 255.255.255.255 | [undefined] | [undefined] |
+
+<sup>[source](https://en.wikipedia.org/wiki/Classful_network)</sup>
 
 ### Unicorn Scan
 
 Performing a Network Sweep
 
 ```bash
-# Class A Network
-unicornscan $RHOST/8
-
-# Class B Network
-unicornscan $RHOST/16
-
-# Class C Network
-unicornscan $RHOST/24
+sudo unicornscan $RHOSTS/$CLASS
 ```
 
 Against a single target.
 
 ```bash    
 # Standard
-unicornscan $RHOST
+sudo unicornscan $RHOST
 
 # Full Range
-unicornscan $RHOST:0-65535
+sudo unicornscan $RHOST:0-65535
+```
+
+### NetDiscover (ARP Scan)
+
+```bash
+sudo netdiscover -r $RHOSTS/$CLASS
 ```
 
 ## Service Enumeration
@@ -197,4 +170,42 @@ mount -t $RHOST:/ /tmp/NFS
 ### Port 5900 - VNC
 ```bash
 vncviewer $RHOST
+```
+
+## DNS Enumeration
+
+DNS Servers are the address books of the internet. As such, they store a wealth of knowledge about the layout of a target's network.
+
+### Manual Enumeration
+```bash
+# Find IP address from domain (Forward Lookup)
+host $DOMAIN
+
+# Find domain from IP address (Reverse Lookup)
+host $IP
+
+# Find Name Servers
+host -t ns $DOMAIN
+
+# Find Mail Servers
+host -t mx $DOMAIN
+
+# Perform a Zone Transfer
+host -l $DOMAIN $NAME_SERVER
+```
+
+### DNSRecon
+
+Performs an "Asynchronous Transfer Full Range"
+
+```bash
+dnsrecon -d $DOMAIN -t axfr
+```
+
+### DNSEnum
+
+Performs a Zone Transfer
+
+```bash
+dnsenum $DOMAIN
 ```
