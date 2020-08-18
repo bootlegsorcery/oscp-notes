@@ -69,7 +69,10 @@ nikto -h $RHOST
 
 curl $RHOST/robots.txt
 
+# Suggested Wordlist: /usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt
 dirbuster
+
+gobuster dir -u $URL -w $WORDLIST
 ```
 #### Wordpress
 ```bash
