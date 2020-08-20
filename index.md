@@ -15,7 +15,7 @@ title: The Art of the Penetration Test
    
    `This stage involves exploiting found vulnerabilities (i.e. performing SQLi)`
 
-1. Maintaining Access
+4. [Maintaining Access](./maintaining_access)
 
     `This stage involves setting up persistence mechanisms, to ensure constant access is maintained.`
 
