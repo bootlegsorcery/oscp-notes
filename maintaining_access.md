@@ -6,8 +6,17 @@ title: Exploitation
 
 _Ensuring you don't have to re-exploit over and over again_
 
-## Executing in Memory
-Some linux distros utilise `/dev/shm`. This is a location like tmp but entirely in RAM.
+## Executing in Memory - TMPFS
+
+```bash
+mount | grep ^tmp
+
+# Example:
+# tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev)
+# tmpfs on /tmp type tmpfs (rw,nosuid,nodev)
+#
+# Beware of the "noexec" flag; executing programs will fail
+```
 
 ## Get full TTY shell
 ```bash
