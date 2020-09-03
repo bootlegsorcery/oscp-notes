@@ -8,8 +8,8 @@ title: Active Information Gathering
 
 _Information gathering in which you interact directly with the target system/network._
 
-|  Type of Enumeration |
-|:-:|:-:|
+|  **Type of Enumeration** |
+|-|-|
 | [Network](#Port-Scanning) | [Local](#Local-Enumeration) |
 
 ## Port Scanning
