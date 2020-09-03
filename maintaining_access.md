@@ -78,11 +78,11 @@ msbuild [src.sln]
 scp user@hostname:/path/to/src user@hostname:/path/to/dst
 ```
 
-- Netcat (/Ncat)
-```
-nc -nvlp $RPORT > out.file # Victim
+- [Netcat]
+```bash
+nc -nvlp $RPORT > out.file # on Victim
 
-nc -nv $RHOST $RPORT < in.file 
+nc -nv $RHOST $RPORT < in.file # on Attacker
 ```
 
 - exe2bat
