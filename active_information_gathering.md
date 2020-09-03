@@ -4,13 +4,7 @@ title: Active Information Gathering
 
 [Home](./)
 
-
-
 _Information gathering in which you interact directly with the target system/network._
-
-**Types of Enumeration:**
-- [Network](#Port-Scanning)
-- [Local](#Local-Enumeration)
 
 ## Port Scanning
 
