@@ -3,6 +3,7 @@ title: Active Information Gathering
 ---
 
 [Home](./)
+
 | | |
 |:-|-:|
 | [Network](#Port-Scanning) | [Local](#Local-Enumeration) |
