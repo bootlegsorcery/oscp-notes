@@ -25,7 +25,7 @@ title: The Art of the Penetration Test
 
 ---
 
-# Resources
+#### Resources
 https://sushant747.gitbooks.io/total-oscp-guide/
 https://guif.re/linuxeop
 https://guif.re/windowseop

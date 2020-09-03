@@ -47,6 +47,7 @@ pyinstaller yourprogram.py
 ## Cross-compiling for Windows
 
 #### C & C++
+
 ```bash
 # Setup
 apt install mingw-w64
@@ -60,6 +61,7 @@ i686-w64-mingw32-gcc [src.c] [-libraries] -o [dst]
 ```
 
 #### C#
+
 ```bash
 # Setup 
 # Add repo with https://www.mono-project.com/download/stable/
@@ -78,6 +80,7 @@ scp user@hostname:/path/to/src user@hostname:/path/to/dst
 
 - Netcat
 ```bash
+
 # Victim
 nc -nvlp $RPORT > out.file
 
@@ -87,6 +90,7 @@ nc -nv $RHOST $RPORT < in.file
 
 - exe2bat
 ```bash
+
 # Convert a windows executable to a copy and paste set of commands
 wine $(locate exe2bat.exe) nc.exe nc.txt
 ```

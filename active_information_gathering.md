@@ -233,5 +233,7 @@ dnsenum $DOMAIN
 
 - [Sherlock](https://github.com/rasta-mouse/Sherlock) <sup><sub>[[archive](assets/files/Sherlock.ps1)]
 
+---
+
 #### Resources
 - https://guif.re/windowseop
