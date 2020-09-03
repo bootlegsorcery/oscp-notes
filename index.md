@@ -19,7 +19,7 @@ title: The Art of the Penetration Test
 
     `This stage involves setting up persistence mechanisms, to ensure constant access is maintained.`
 
-5. Housekeeping
+5. [Housekeeping](./house_keeping)
 
     `This stage involves cleaning up at the end of an engagement (i.e. removing backdoor user accounts)`
 
