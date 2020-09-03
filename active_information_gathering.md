@@ -3,8 +3,11 @@ title: Active Information Gathering
 ---
 
 [Home](./)
+[Network](#Port-Scanning)
+[Local](#Local-Enumeration)
 
 _Information gathering in which you interact directly with the target system/network._
+
 
 ## Port Scanning
 
@@ -25,7 +28,7 @@ _Information gathering in which you interact directly with the target system/net
 Performing a Network Sweep
 
 ```bash
-sudo unicornscan $RHOSTS/$CLASS
+sudo unicornscan -mT $RHOSTS/$CLASS
 ```
 
 Against a single target.
@@ -216,3 +219,22 @@ Performs a Zone Transfer
 ```bash
 dnsenum $DOMAIN
 ```
+
+## Local Enumeration
+
+### Linux | Enumeration Scripts:
+- [LinEnum.sh](https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh) <sup><sub>[[archive](assets/files/LinEnum.sh)]
+
+- [linuxprivchecker.py](https://raw.githubusercontent.com/sleventyeleven/linuxprivchecker/master/linuxprivchecker.py) <sup><sub>[[archive](assets/files/linuxprivchecker.py)]
+
+- [unix-privesc-check.sh](https://raw.githubusercontent.com/pentestmonkey/unix-privesc-check/master/upc.sh) <sup><sub>[[archive](assets/files/upc.sh)]
+
+### Windows | Enumeration Scripts
+- [windows-exploit-suggester.py](https://raw.githubusercontent.com/AonCyberLabs/Windows-Exploit-Suggester/master/windows-exploit-suggester.py)  <sup><sub>[[archive](assets/files/windows-exploit-suggester.py)]
+
+- [windows-privesc-check](https://github.com/pentestmonkey/windows-privesc-check) <sup><sub>[[archive](assets/files/windows_privesc_check.py)]
+
+- [Sherlock](https://github.com/rasta-mouse/Sherlock) <sup><sub>[[archive](assets/files/Sherlock.ps1)]
+
+#### Resources
+- https://guif.re/windowseop

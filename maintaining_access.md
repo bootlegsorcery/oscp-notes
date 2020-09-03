@@ -22,3 +22,8 @@ mount | grep ^tmp
 ```bash
 python -c 'import pty; pty.spawn("/bin/bash")'
 ```
+
+## Switch user
+
+`su $USER`
+`sudo -u $USER $cmd`
