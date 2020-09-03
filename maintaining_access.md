@@ -35,8 +35,11 @@ python -c 'import pty; pty.spawn("/bin/bash")'
 
 ## Switch user
 
-`su $USER`
-`sudo -u $USER $cmd`
+```bash
+su $USER
+
+sudo -u $USER $cmd
+```
 
 ### Using Python Scripts without Python installed
 [PyInstaller](https://github.com/pyinstaller/pyinstaller) <sup><sub>[[archive](assets/files/PyInstaller-3.6.zip)]
