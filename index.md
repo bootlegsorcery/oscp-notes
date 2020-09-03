@@ -24,3 +24,11 @@ title: The Art of the Penetration Test
     `This stage involves cleaning up at the end of an engagement (i.e. removing backdoor user accounts)`
 
 ---
+
+# Resources
+https://sushant747.gitbooks.io/total-oscp-guide/
+https://guif.re/linuxeop
+https://guif.re/windowseop
+https://github.com/rafiherm/OSCP
+
+---
