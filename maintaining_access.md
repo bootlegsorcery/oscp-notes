@@ -116,3 +116,11 @@ CScript zip.vbs $SRC $DEST
 ```bash
 CScript wget.vbs $SRC $DEST
 ```
+
+## Fun Tips
+
+### Linux Write a file without a text editor
+
+```bash
+cat <<EOF> [file]
+```
