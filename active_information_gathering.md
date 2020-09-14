@@ -44,6 +44,13 @@ sudo unicornscan $RHOST:0-65535
 sudo netdiscover -r $RHOSTS/$CLASS
 ```
 
+### Nmap
+
+```bash
+# Scan for hosts that are up, skipping the port scan.
+nmap -sP 10.10.10.*
+```
+
 ## Service Enumeration
 
 ### Port 21 - FTP
