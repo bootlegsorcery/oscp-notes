@@ -37,9 +37,24 @@ python -c 'import pty; pty.spawn("/bin/bash")'
 
 ```bash
 su $USER
+```
 
+## Run Single command as a different user
+
+### Linux
+
+```bash
 sudo -u $USER $cmd
 ```
+
+### Windows 
+
+```bash
+echo "$PASSWORD" | runas /profile /user:$USER “$COMMAND”
+```
+
++ [sudo.cmd](./assests/sudo.cmd)<sup><sub>[[copy&paste](assets/files/sudo.cmd.txt)]
+
 
 ### Using Python Scripts without Python installed
 [PyInstaller](https://github.com/pyinstaller/pyinstaller) <sup><sub>[[archive](assets/files/PyInstaller-3.6.zip)]

@@ -1,0 +1,4 @@
+echo "@echo Set objShell = CreateObject("Shell.Application") > %temp%\sudo.tmp.vbs" > sudo.cmd
+echo "@echo args = Right("%*", (Len("%*") - Len("%1"))) >> %temp%\sudo.tmp.vbs" >> sudo.cmd
+echo "@echo objShell.ShellExecute "%1", args, "", "runas" >> %temp%\sudo.tmp.vbs" >> sudo.cmd
+echo "@cscript %temp%\sudo.tmp.vbs" >> sudo.cmd
