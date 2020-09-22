@@ -74,7 +74,7 @@ rdesktop -u jack -p sparrow [IP-ADDRESS]
 ```
 
 ### Setuid.c
-<sup><sub>[[archive](assets/files/win_setuid.c]
+<sup><sub>[[archive](assets/files/win_setuid.c)]
 
 If you can overwrite a binary that'll be run with priviledge, run this.
 
@@ -98,7 +98,7 @@ int main()
 
 _Requires GUI (so RDP...)_
 
-+ [Procmon.exe](https://download.sysinternals.com/files/ProcessMonitor.zip) <sup><sub>[[archive](assets/files/procmon.exe]
++ [Procmon.exe](https://download.sysinternals.com/files/ProcessMonitor.zip) <sup><sub> [[archive](assets/files/procmon.exe)]
 
 Run the following; look for services that call DLLs that return "NAME NOT FOUND". You can add a DLL to these locations and it will be loaded in, in the context of the process (potentially as SYSTEM)
 
@@ -213,7 +213,7 @@ cat schtask.txt | grep "SYSTEM\|Task To Run" | grep -B 1 SYSTEM
 
 ### Weak Service Permissions
 
-Thanks to [sushant747] for the following scripts.
+Thanks to `sushant747` for the following scripts.
 
 #### Using WMCI
 
@@ -266,7 +266,7 @@ net stop [service name] && net start [service name].
 
 ### AccessChk
 
-+ [AccessChk](https://download.sysinternals.com/files/AccessChk.zip) <sup><sub>[[archive](assets/files/accesschk_v5.02.exe]
++ [AccessChk](https://download.sysinternals.com/files/AccessChk.zip) <sup><sub>[[archive](assets/files/accesschk_v5.02.exe)]
 
 ```bash
 # Accesschk stuff
@@ -300,7 +300,7 @@ sc config [service_name] binpath= "[cmd]"
 ## Linux Privilege Escalation
 
 ### Setuid.c
-<sup><sub>[[archive](assets/files/lin_setuid.c]
+<sup><sub> [[archive](assets/files/lin_setuid.c)]
 
 If you can overwrite a binary that'll be run with priviledge, run this.
 
