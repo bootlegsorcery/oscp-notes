@@ -108,8 +108,19 @@ msfvenom [blah blah blah] -f msi -o setup.msi
 
 # Execute it with:
 msiexec /quiet /qn /i setup.msi
-
 ```
+
+### Unquoted Paths
+
+When windows sees the a service is pointed to `C:\Program Files\Something Here\service.exe` (**without quotes around it**), it will try to run the following in order:
+
+```bash
+C:\Program.exe
+C:\Program Files\Something.exe
+C:\Program Files\Something Here\service.exe
+```
+
+If you make sure one of these exists before the legitimate is called, you can get code execution.
 
 ## Exfiltration
 
