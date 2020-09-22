@@ -53,10 +53,24 @@ sudo -u $USER $cmd
 echo "$PASSWORD" | runas /profile /user:$USER “$COMMAND”
 ```
 
-+ [sudo.cmd](./assests/sudo.cmd)<sup><sub>[[copy&paste](assets/files/sudo.cmd.txt)]
++ [sudo.cmd](./assests/sudo.cmd) <sup><sub>[[copy&paste](assets/files/sudo.cmd.txt)]
 
 
 ## Windows Privilege Escalation
+
+### windows-exploit-suggester.py
+
++ [windows-exploit-suggester.py](https://github.com/AonCyberLabs/Windows-Exploit-Suggester) <sup><sub>[[archive](assets/files/windows-exploit-suggester.py)]
+
+```bash
+# Victim
+systeminfo # Copy & Paste this into a file on the attacker
+
+# Attacker
+python windows-exploit-suggester.py --update
+
+python windows-exploit-suggester.py --database 20XX-YY-ZZ-mssb.xlsx --systeminfo systeminfo.txt
+```
 
 ### Windows Service / DLL Templates
 
