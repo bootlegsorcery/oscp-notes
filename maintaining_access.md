@@ -221,6 +221,19 @@ Then go through it manually with:
 cacls "C:\path\to\file.exe"
 ```
 
+### Get Info on all Services
+
+```bash
+sc query state= all | findstr "SERVICE_NAME:" >> tmp_servicenames.txt
+
+FOR /F "tokens=2 delims= " %i in (tmp_servicenames.txt) DO @echo %i >> tmp_services.txt
+
+FOR /F %i in (tmp_services.txt) DO @sc qc %i >> service_report.txt
+
+del tmp_servicenames.txt && del tmp_services.txt
+```
+
+
 ### Restarting a Service
 
 ```bash
