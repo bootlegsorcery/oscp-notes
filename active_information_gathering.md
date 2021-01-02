@@ -77,6 +77,7 @@ nikto -h $RHOST
 curl $RHOST/robots.txt
 
 # Suggested Wordlist: /usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt
+# Suggested extensions to look for: php, pl, sh, asp, html, json, py, cfm, aspx, rb, cgi
 dirbuster
 
 gobuster dir -u $URL -w $WORDLIST
